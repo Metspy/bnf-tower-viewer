@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BNF Tower Explorer</title>
+  <meta name="description" content="Interactive 3D model of the AMF3 meteorological tower at the Bankhead National Forest (BNF) site, Alabama.">
+  <style>
+    :root {
+      --bg: #f6f7f5; --card: #ffffff; --text: #1d2327; --muted: #5d6a64; --line: #dde3df; --accent: #2f7d4a;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #161b1e; --card: #1f2629; --text: #e6ece8; --muted: #9fb0a8; --line: #313b3f; --accent: #7cc48a; }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.5; }
+    main { max-width: 960px; margin: 0 auto; padding: 40px 16px 32px; }
+    h1 { font-size: clamp(24px, 4vw, 34px); margin: 0 0 6px; letter-spacing: -0.01em; }
+    .lede { color: var(--muted); margin: 0 0 28px; max-width: 60ch; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+    a.card { display: block; background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; color: inherit; text-decoration: none; transition: transform .12s, box-shadow .12s; }
+    a.card:hover, a.card:focus-visible { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.12); outline: none; }
+    a.card img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: var(--line); }
+    .body { padding: 14px 16px 18px; }
+    .body h2 { font-size: 18px; margin: 0 0 4px; }
+    .body p { margin: 0 0 10px; color: var(--muted); font-size: 14px; }
+    .meta { font-size: 12px; color: var(--muted); }
+    .go { color: var(--accent); font-weight: 600; font-size: 14px; }
+    .help { margin-top: 28px; font-size: 14px; color: var(--muted); }
+    .help kbd { font-family: inherit; font-size: 12px; border: 1px solid var(--line); border-radius: 3px; padding: 0 4px; background: var(--card); }
+    footer { margin-top: 32px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 12px; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>BNF Tower Explorer</h1>
+    <p class="lede">An interactive 3D model of the AMF3 meteorological tower (S10) at the Bankhead National Forest site in northern Alabama. Click an instrument to see what it measures and find its data.</p>
+
+    <div class="grid">
+      <a class="card" href="s10/">
+        <img src="img/s10.jpg" alt="The S10 tower with its fence and equipment sheds">
+        <div class="body">
+          <h2>S10 tower site</h2>
+          <p>The tower, its instruments, the fenced site and the forest within 100 m.</p>
+          <div class="meta">Smaller download, works on most laptops and phones.</div>
+          <div class="go">Open &rarr;</div>
+        </div>
+      </a>
+      <a class="card" href="full/">
+        <img src="img/full.jpg" alt="The tower rising above the surrounding forest">
+        <div class="body">
+          <h2>Full domain</h2>
+          <p>The tower in the wider landscape: lidar-mapped forest, S13 and S14, roads, the Work Center and the M1 site.</p>
+          <div class="meta">Larger download; best on a desktop or laptop.</div>
+          <div class="go">Open &rarr;</div>
+        </div>
+      </a>
+    </div>
+
+    <p class="help">
+      <strong>Controls:</strong> right-drag to orbit, middle-drag to pan, scroll to zoom, click an instrument for details.
+      On a touch screen, drag with one finger to orbit and pinch to zoom.
+    </p>
+
+    <footer>
+      Instrument details link to ARM Data Discovery. <span id="built"></span>
+    </footer>
+  </main>
+  <script>
+    fetch("build.json").then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
+      if (j && j.built) document.getElementById("built").textContent = "Last updated " + j.built + ".";
+    }).catch(function () {});
+  </script>
+</body>
+</html>
